@@ -5,28 +5,25 @@
 
 package controller;
 
-import dal.ErollmentDBContext;
 import dal.GroupDBContext;
-import dal.StudentDBContext;
+import dal.SessionDBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import model.Group;
 import model.Session;
-import model.Student;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="ListStudentInGroup", urlPatterns={"/list"})
-public class ListStudentInGroup extends HttpServlet {
+@WebServlet(name="ListSubjectAttendReport", urlPatterns={"/listsub"})
+public class ListSubjectAttendReport extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,23 +34,16 @@ public class ListStudentInGroup extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String gid = request.getParameter("gid");
-        HttpSession ses = request.getSession();
+        GroupDBContext db = new GroupDBContext();
+        SessionDBContext dbs = new SessionDBContext();
+        String lid = request.getParameter("id");
         
-        GroupDBContext dbs = new GroupDBContext();
-        Group gr = dbs.getGroupByGid(gid);
-        ErollmentDBContext db = new ErollmentDBContext();
-        List<Student> student = db.getStudentByGid(gid);
-        List<Student> stu = new ArrayList();
-        StudentDBContext d = new StudentDBContext();
-        for (Student student1 : student) {
-            stu.add(d.getStudentByIDd(student1.getStuid()));
-        }
-        request.setAttribute("student", stu);
-        request.setAttribute("group", gr);
-        request.getRequestDispatcher("list.jsp").forward(request, response);
-        }
-    
+        List<Session> listS = dbs.distinctGidByLid(lid);
+        request.setAttribute("group", listS);
+        request.getRequestDispatcher("attendedReport.jsp").forward(request, response);
+        
+        
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

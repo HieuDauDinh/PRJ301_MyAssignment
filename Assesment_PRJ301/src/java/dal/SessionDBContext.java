@@ -27,11 +27,33 @@ public class SessionDBContext extends DBContext {
 
     public static void main(String[] args) {
         SessionDBContext slot = new SessionDBContext();
-        Attendance a = slot.getPresentOnSeidAndSid(1, "S0002");
-        System.out.println(a.isIsPresent());
+        List<Session> a = slot.distinctGidByLid("L0006");
     }
-    
-    public Attendance getPresentOnSeidAndSid(int seid, String sid){
+
+    public List<Session> distinctGidByLid(String lid) {
+        List<Session> ses = new ArrayList<>();
+        String sql = "SELECT DISTINCT [gid]\n"
+                + "  FROM [Assignment_PRJ301].[dbo].[Session]\n"
+                + "    Where lid = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, lid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Session s = new Session();
+                GroupDBContext db = new GroupDBContext();
+                String gid = rs.getString("gid");
+                s.setGid(db.getGroupByGid(gid));
+                ses.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ses;
+    }
+
+    public Attendance getPresentOnSeidAndSid(int seid, String sid) {
         Attendance a = new Attendance();
         String sql = "Select isPresent From Attendance Where seid = ? and sid = ?";
 

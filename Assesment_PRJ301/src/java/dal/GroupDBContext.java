@@ -59,6 +59,8 @@ public class GroupDBContext extends DBContext {
         return null;
 
     }
+    
+    
 
     public List<Session> getSessionByGid(String grid) {
         List<Session> ses = new ArrayList<>();
