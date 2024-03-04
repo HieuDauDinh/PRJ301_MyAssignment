@@ -27,7 +27,8 @@ public class SessionDBContext extends DBContext {
 
     public static void main(String[] args) {
         SessionDBContext slot = new SessionDBContext();
-        List<Session> a = slot.distinctGidByLid("L0006");
+        List<Session> a = slot.getGidBySidToMarkAttend("S0001");
+        System.out.println(a.size());
     }
 
     public List<Session> distinctGidByLid(String lid) {
@@ -261,6 +262,50 @@ public class SessionDBContext extends DBContext {
         }
         return list;
     }
+    
+    public List<Session> getSessionBySidAndGid(String username, String grid) {
+        List<Session> list = new ArrayList();
+        GroupDBContext group = new GroupDBContext();
+        LecturerDBContext lec = new LecturerDBContext();
+        TimeSlotDBContext tslot = new TimeSlotDBContext();
+        RoomDBContext room = new RoomDBContext();
+        SlotDBContext slot = new SlotDBContext();
+        SubjectDBContext subject = new SubjectDBContext();
+        String sql = "SELECT se.seid, se.roomid, se.date, se.gid, se.isTaken, "
+                + "se.lid, se.tid, se.subid, se.slotid from Session se INNER JOIN [Group] g ON se.gid = g.gid \n"
+                + "	INNER JOIN Erollment e ON g.gid = e.gid  INNER JOIN Student s ON s.stuid = e.stuid\n"
+                + "                    WHERE s.stuid = ? and g.gid = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, grid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int seid = rs.getInt("seid");
+                String gid = rs.getString("gid");
+                String lid = rs.getString("lid");
+                int tid = rs.getInt("tid");
+                boolean isTaken = rs.getBoolean("isTaken");
+                int slotid = rs.getInt("slotid");
+                String roomid = rs.getString("roomid");
+                String subid = rs.getString("subid");
+                Date date = rs.getDate("date");
+
+                Group gr = group.getGroupByGid(gid);
+                Lecturer l = lec.getLecByLid(lid);
+                Room r = room.getRoomByRid(roomid);
+                TimeSlot time = tslot.getTimeSlotByTid(tid);
+                Slot s = slot.getSlotBySlotId(slotid);
+                Subject sub = subject.getSubBySubid(subid);
+
+                Session ses = new Session(seid, gr, l, r, time, isTaken, s, sub, date);
+                list.add(ses);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
     public ArrayList<Student> getStudentsByLession(int leid) {
         ArrayList<Student> students = new ArrayList<>();
@@ -362,6 +407,29 @@ public class SessionDBContext extends DBContext {
             }
         }
 
+    }
+
+    public List<Session> getGidBySidToMarkAttend(String sid) {
+        List<Session> ses = new ArrayList<>();
+        String sql = "SELECT DISTINCT se.gid from Session se INNER JOIN [Group] g ON se.gid = g.gid \n"
+                + "INNER JOIN Erollment e ON g.gid = e.gid  INNER JOIN Student s ON s.stuid = e.stuid\n"
+                + "WHERE s.stuid = ?";
+        
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, sid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Session s = new Session();
+                GroupDBContext db = new GroupDBContext();
+                String gid = rs.getString("gid");
+                s.setGid(db.getGroupByGid(gid));
+                ses.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ses;
     }
 
 }

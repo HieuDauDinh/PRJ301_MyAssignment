@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/src/java/dal/SessionDBContext.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/web/WeeklyTimeTable.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/web/inforSession.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/web/list.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/src/java/model/Attendance.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/web/attendance.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/src/java/controller/WeeklyTimeTableController.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/Assesment_PRJ301/src/java/controller/AttendanceController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/web/attendedReport.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/web/functionStudent.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/src/java/controller/ListSubjectAttendReport.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/src/java/dal/SessionDBContext.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/src/java/controller/AttendReport.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/src/java/dal/GroupDBContext.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ301_MyAssignment/Assesment_PRJ301/src/java/controller/WeeklyTimeTableController.java</file>
         </group>
     </open-files>
 </project-private>

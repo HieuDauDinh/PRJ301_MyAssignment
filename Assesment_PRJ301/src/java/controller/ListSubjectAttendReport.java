@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Session;
@@ -36,10 +37,16 @@ public class ListSubjectAttendReport extends HttpServlet {
     throws ServletException, IOException {
         GroupDBContext db = new GroupDBContext();
         SessionDBContext dbs = new SessionDBContext();
-        String lid = request.getParameter("id");
-        
-        List<Session> listS = dbs.distinctGidByLid(lid);
+        String id = request.getParameter("id");
+        int role = Integer.parseInt(request.getParameter("r"));
+        List<Session> listS = dbs.distinctGidByLid(id);
+        List<Session> listGrbySiStuid = dbs.getGidBySidToMarkAttend(id);
+        HttpSession sesi = request.getSession();
         request.setAttribute("group", listS);
+        request.setAttribute("groupStu", listGrbySiStuid);
+        sesi.setAttribute("idStu", id);
+        sesi.setAttribute("role", role);
+        request.setAttribute("listGroupStu", listGrbySiStuid);
         request.getRequestDispatcher("attendedReport.jsp").forward(request, response);
         
         
