@@ -67,6 +67,7 @@ td img {
     </style>
     <body class="container">
         <h1>${requestScope.group.gname} - ${requestScope.group.subid.subid}</h1>
+        <a href="">Home</a> | <a href="">Activity</a> |<a href="loginc.jsp">Logout</a>| View
         <h3>List of Student</h3>
             <table>
                 <thead>

@@ -65,7 +65,7 @@
     </head>
     <body>
         <h1>FPT University Academic Portal</h1>
-        <a href="">Home</a> | <a href="">Activity</a> | View
+        <a href="">Home</a> | <a href="">Activity</a> |<a href="loginc.jsp">Logout</a> View
         <h3>Activity detail</h3>
 
         <table class="container">

@@ -77,6 +77,7 @@
     </head>
     <body class="container">
         <h2>Attendance Table</h2>
+        <a href="loginc.jsp">Logout</a>
         <table>
             <c:forEach items="${sessionScope.listAtt}" var="att">
                 <tr>

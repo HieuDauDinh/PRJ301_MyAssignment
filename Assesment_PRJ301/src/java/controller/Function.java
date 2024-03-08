@@ -6,7 +6,9 @@
 package controller;
 
 import dal.AccountDBContext;
+import dal.LecturerDBContext;
 import dal.SessionDBContext;
+import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.Attendance;
+import model.Lecturer;
 import model.Session;
+import model.Student;
 
 /**
  *
@@ -84,15 +88,20 @@ public class Function extends HttpServlet {
         SessionDBContext se = new SessionDBContext();
         List<Session> listSession = se.getSessionByLid(user_raw);
         List<Session> listSessionStu = se.getSessionBySid(user_raw);
-         
+        StudentDBContext studb = new StudentDBContext();
+        LecturerDBContext lecdb = new LecturerDBContext();
+        Student stu = studb.getStudentByIDd(user_raw);
+        Lecturer lec = lecdb.getLecByLid(user_raw);
         session.setAttribute("ses", listSession);
         session.setAttribute("sesStu", listSessionStu);
         if(acc!=null){
             if(acc.getRole() == 1){            
                 session.setAttribute("acc", acc);
+                session.setAttribute("lec", lec);
                 response.sendRedirect("functionLectuter.jsp");
             }else{
                 session.setAttribute("acc", acc);
+                session.setAttribute("stu", stu);
                 response.sendRedirect("functionStudent.jsp");
             }
         }else{

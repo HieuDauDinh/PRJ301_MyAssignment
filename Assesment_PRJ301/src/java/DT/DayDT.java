@@ -4,8 +4,12 @@
  */
 package DT;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
@@ -13,6 +17,7 @@ import java.time.LocalDate;
  */
 public class DayDT {
     private int week;
+    private Date date;
     private String content;
     private List<SessionDT> list;
 
@@ -59,4 +64,9 @@ public class DayDT {
         return false;
     }
             
+   public String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
 }

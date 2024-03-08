@@ -98,19 +98,19 @@
             <h1>FPT University Academic Portal</h1>
             <div class="d-flex justify-content-end d-flex align-items-start">
                 <button type="button" class="btn btn-success h-15 pt-0 ms-1 me-5 mt-1"> CAMPUS: FPTU-Hòa Lạc </button></br>
-                <input type="button" value="Home" class="btn btn-success h-15 pt-0 ms-1 me-5 mt-1" onclick="window.location.href ='Home.jsp'"/>
+               <a href="loginc.jsp">Logout</a>
             </div>
+            <h1> Activities for ${sessionScope.lec.lid} (${sessionScope.lec.lname})</h1>
         </header>
         <div class="row">
             <div class="mt-2">
                 <div class="lecturer-section">
+                    <h1> Activities for ${sessionScope.lec.lid} (${sessionScope.lec.lname})</h1>
                     <h2>Lecturer Section</h2>                  
                     <c:set value="${sessionScope.acc}" var="acc"></c:set>
                     <ul>
                         <li><a href="weeklyTable">View Weekly timetable</a> (Lịch Dạy)</li>
-                        <li><a href="" id="styleHref">Take Attendance</a> (Sửa điểm danh)</li>
                         <li><a href="listsub?id=${acc.username}&r=${acc.role}" id="styleHref">Views Attendance</a> (Báo cáo điểm danh)</li>
-                        <li><a href="#" id="styleHref">Mark Report</a> (Báo cáo điểm)</li>
                     </ul>
                 </div>
             </div>

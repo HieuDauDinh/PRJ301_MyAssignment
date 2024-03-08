@@ -35,6 +35,7 @@
                             <div class="col-md-8">
                                 <h1><span>FPT University Academic Portal</span>
                                 </h1>
+
                             </div>
                             <div class="col-md-4">
 
@@ -45,11 +46,16 @@
                                 <form method="post" action="weeklyTable">
                                     <ol class="breadcrumb">
                                         <li>
-                                            <span id="ctl00_lblNavigation"><a href="Home.jsp">Home</a>&nbsp;|&nbsp;<b>View
+                                            <span id="ctl00_lblNavigation"><a href="Home.jsp">Home</a>&nbsp;|<a href="loginc.jsp">Logout</a>&nbsp;<b>View
                                                     Schedule</b></span>
                                         </li>
                                     </ol>
-
+                                    <c:if test="${sessionScope.acc.role == 1}">
+                                        <h1> Activities for ${sessionScope.lec.lid} (${sessionScope.lec.lname})</h1>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.role == 0}">
+                                        <h1> Activities for ${sessionScope.stu.stuid} (${sessionScope.stu.name})</h1> 
+                                    </c:if>
                                     <div>
                                         <title>
                                             FPT University Academic Portal
@@ -116,7 +122,9 @@
                                                     <td>${slot.slot}</td>
                                                     <c:forEach items="${requestScope.dayweek}" var="i">
                                                         <c:if test="${sessionScope.acc.role == 1}">
+
                                                             <td>
+
                                                                 <c:forEach items="${requestScope.listSession}" var="les">
 
                                                                     <c:if test="${les.date eq i.formatDate() and les.slotid.slotid eq slot.slotid}">

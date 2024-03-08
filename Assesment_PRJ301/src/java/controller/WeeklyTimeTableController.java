@@ -32,10 +32,12 @@ public class WeeklyTimeTableController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String yearS = request.getParameter("year");
-        String username = request.getParameter("lid");
+        SlotDBContext slot = new SlotDBContext();
         HttpSession session = request.getSession();
         SessionDBContext se = new SessionDBContext();
+        DayDT dt = new DayDT();
+        String yearS = request.getParameter("year");
+        String username = request.getParameter("lid");
         Account acc = (Account)session.getAttribute("acc");
         session.setAttribute("username", username);
         List<Session> listSession = (List<Session>)session.getAttribute("ses");
@@ -59,9 +61,8 @@ public class WeeklyTimeTableController extends HttpServlet {
         //Lấy danh sách các ngày từ SessionDT tại các vị trí index
         int index = DateProcess.IndexByWeeks(list, week);
         List<SessionDT> dts = list.get(index).getList();
-      
-        SlotDBContext slot = new SlotDBContext();
-        
+        String getDateNow = dt.getCurrentDate();
+              
       //  List<Session> listSession = se.getAllSession();
         List<Slot> s = slot.getAllSlot();
         List<Session> listSessionByLid = se.getSessionByLid(username);
@@ -73,6 +74,7 @@ public class WeeklyTimeTableController extends HttpServlet {
         request.setAttribute("listSession", listSession);
         request.setAttribute("listSessionStu", listSessionStu);
         request.setAttribute("listSessionByLid", listSessionByLid);
+        request.setAttribute("dateNow", getDateNow);
         request.getRequestDispatcher("WeeklyTimeTable.jsp").forward(request, response);
     } 
 
