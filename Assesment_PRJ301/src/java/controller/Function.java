@@ -30,7 +30,7 @@ import model.Student;
  *
  * @author Admin
  */
-@WebServlet(name="Function", urlPatterns={"/function"})
+@WebServlet(name="Function", urlPatterns={"/login"})
 public class Function extends HttpServlet {
    
     /** 

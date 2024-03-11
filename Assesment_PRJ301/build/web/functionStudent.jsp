@@ -111,7 +111,7 @@
                     <ul>
                         <li><a href="weeklyTable">Weekly timetable </a>(Thời khóa biểu từng tuần)</li>
                         <li><a href="listsub?id=${acc.username}&r=${acc.role}" id="styleHref">Attendance report </a> (Báo cáo điểm danh)</li>
-                        <li><a href="#" id="styleHref">Mark Report</a> (Báo cáo điểm)</li>
+                        <li><a href="markreport?id=${acc.username}" id="styleHref">Mark Report</a> (Báo cáo điểm)</li>
                     </ul>
                 </div>
             </div>
