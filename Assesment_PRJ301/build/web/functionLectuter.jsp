@@ -105,7 +105,6 @@
         <div class="row">
             <div class="mt-2">
                 <div class="lecturer-section">
-                    <h1> Activities for ${sessionScope.lec.lid} (${sessionScope.lec.lname})</h1>
                     <h2>Lecturer Section</h2>                  
                     <c:set value="${sessionScope.acc}" var="acc"></c:set>
                     <ul>

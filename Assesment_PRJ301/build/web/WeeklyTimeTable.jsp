@@ -11,20 +11,33 @@
                     FPT University Academic Portal
                 </title>
 
-                <style type="text/css">
-                    .style1 {
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+
+                    .grade-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+
+                    .grade-table th, .grade-table td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                    }
+
+                    .grade-table th {
+                        background-color: #f2f2f2;
+                    }
+
+                    .grade-table tfoot td {
                         font-weight: bold;
                     }
 
-                    .label-success {
-                        background-color: #5cb85c;
-                    }
-                    table, td, th {
-                        border: 1px solid;
-                    }
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
+                    .grade-table tfoot tr:last-child td {
+                        border-top: 2px solid #333;
                     }
                 </style>
                 </head>
@@ -81,10 +94,10 @@
                                         </div>
 
 
-                                        <table>
+                                        <table class="grade-table">
                                             <tr style="text-align: left">
 
-                                                <th rowspan="2" style="width: 200px; background-color: blue;">
+                                                <th rowspan="2" style="width: 200px; background-color: violet;">
                                                     <span class="auto-style1"><strong>Year</strong></span>
                                                     <select name="year"
                                                             id="ctl00_mainContent_drpYear" onchange="this.form.submit()">
@@ -104,18 +117,18 @@
                                                             </c:forEach>                                                      
                                                         </select>
                                                 </th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Mon</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Tue</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Wed</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Thu</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Fri</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Sat</th>
-                                                <th style="width: 200px; background-color: blue;"align="center">Sun</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Mon</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Tue</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Wed</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Thu</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Fri</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Sat</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">Sun</th>
                                                 <br/>
 
                                             </tr>
                                             <c:forEach items="${requestScope.dayweek}" var="i">
-                                                <th style="width: 200px; background-color: blue;"align="center">${i.showDate()}</th>
+                                                <th style="width: 200px; background-color: violet;"align="center">${i.showDate()}</th>
                                                 </c:forEach>   
                                                 <c:forEach items="${requestScope.slot}" var="slot">
                                                 <tr>

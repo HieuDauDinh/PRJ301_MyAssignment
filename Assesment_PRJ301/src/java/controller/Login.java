@@ -31,7 +31,7 @@ import model.Student;
  * @author Admin
  */
 @WebServlet(name="Function", urlPatterns={"/login"})
-public class Function extends HttpServlet {
+public class Login extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

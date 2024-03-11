@@ -27,8 +27,10 @@ public class SessionDBContext extends DBContext {
 
     public static void main(String[] args) {
         SessionDBContext slot = new SessionDBContext();
-        List<Session> a = slot.getGidBySidToMarkAttend("S0001");
-        System.out.println(a.size());
+        Attendance a = slot.getAttendencesByLessionAndStuid(1, "S0001");
+
+            System.out.println(a.getDescription());
+
     }
 
     public List<Session> distinctGidByLid(String lid) {
@@ -262,7 +264,7 @@ public class SessionDBContext extends DBContext {
         }
         return list;
     }
-    
+
     public List<Session> getSessionBySidAndGid(String username, String grid) {
         List<Session> list = new ArrayList();
         GroupDBContext group = new GroupDBContext();
@@ -366,6 +368,44 @@ public class SessionDBContext extends DBContext {
         return atts;
     }
 
+    public Attendance getAttendencesByLessionAndStuid(int leid, String sid) {
+        Attendance a = new Attendance();
+        StudentDBContext students = new StudentDBContext();
+        try {
+            String sql = "SELECT [aid]\n"
+                    + "      ,[seid]\n"
+                    + "      ,[sid]\n"
+                    + "      ,[isPresent]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[DateTime]\n"
+                    + "  FROM [Assignment_PRJ301].[dbo].[Attendance]\n"
+                    + "  Where [seid] = ? and [sid] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, leid);
+            stm.setString(2, sid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Student s = students.getStudentByIDd(rs.getString("sid"));
+                Session ses = getSessionBySid(leid);
+                a.setSid(s);
+
+                ses.setSeid(leid);
+                a.setSeid(ses);
+
+                a.setAid(rs.getInt("aid"));
+                if (a.getAid() != 0) {
+                    a.setDescription(rs.getString("description"));
+                    a.setIsPresent(rs.getBoolean("isPresent"));
+                    a.setDate(rs.getTimestamp("DateTime"));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+
     public void takeAttendances(int leid, ArrayList<Attendance> atts) {
         try {
             connection.setAutoCommit(false);
@@ -414,7 +454,7 @@ public class SessionDBContext extends DBContext {
         String sql = "SELECT DISTINCT se.gid from Session se INNER JOIN [Group] g ON se.gid = g.gid \n"
                 + "INNER JOIN Erollment e ON g.gid = e.gid  INNER JOIN Student s ON s.stuid = e.stuid\n"
                 + "WHERE s.stuid = ?";
-        
+
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, sid);

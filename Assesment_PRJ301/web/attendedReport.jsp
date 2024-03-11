@@ -11,10 +11,39 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <a href="loginc.jsp">Logout</a>
-    </head>
-    <body>
-        <c:if test="${sessionScope.role == 1}">
+    <a href="loginc.jsp">Logout</a>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .grade-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            .grade-table th, .grade-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .grade-table th {
+                background-color: #f2f2f2;
+            }
+
+            .grade-table tfoot td {
+                font-weight: bold;
+            }
+
+            .grade-table tfoot tr:last-child td {
+                border-top: 2px solid #333;
+            }
+        </style>
+</head>
+<body>
+    <c:if test="${sessionScope.role == 1}">
         <table>
             <tbody>
                 <tr>
@@ -53,7 +82,7 @@
                         </table>
                     </td>
                     <td>
-                        <table border="1px">
+                        <table border="1px" class="grade-table">
                             <tbody>
                                 <tr></tr>
                             </tbody>
@@ -94,9 +123,9 @@
             </tbody>           
 
         </table>
-        </c:if>
-        
-        <c:if test="${sessionScope.role == 0}">
+    </c:if>
+
+    <c:if test="${sessionScope.role == 0}">
         <table>
             <tbody>
                 <tr>
@@ -135,7 +164,7 @@
                         </table>
                     </td>
                     <td>
-                        <table border="1px">
+                        <table border="1px" class="grade-table">
                             <tbody>
                                 <tr></tr>
                             </tbody>
@@ -159,13 +188,24 @@
                                         <td>${ses.rid.rname}</td>
                                         <td>${ses.lid.lid}(${ses.lid.lname})</td>
                                         <td>${ses.gid.gname}</td>
+
                                         <td>
-                                            <c:if test="${!ses.isTaken}">
-                                                Not yet                                              
-                                            </c:if>
-                                            <c:if test="${ses.isTaken}">
-                                                Attended
-                                            </c:if>
+                                            <c:forEach items="${requestScope.atten}" var="att">
+                                                <c:if test="${ses.seid == att.seid.seid}">
+                                                    <c:if test="${att.isPresent}">
+                                                        Attended
+                                                    </c:if>
+                                                    <c:if test="${!att.isPresent}">
+                                                        <c:if test="${ses.isTaken}">
+                                                            Absent
+                                                        </c:if>
+                                                        <c:if test="${!ses.isTaken}">
+                                                            Not Yet
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:if>
+
+                                            </c:forEach>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -176,6 +216,6 @@
             </tbody>           
 
         </table>
-        </c:if>
-    </body>
+    </c:if>
+</body>
 </html>
