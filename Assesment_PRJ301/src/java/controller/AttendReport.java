@@ -5,6 +5,7 @@
 
 package controller;
 
+import controller.authetication.BaseRequiredAuthenticationController;
 import dal.GroupDBContext;
 import dal.SessionDBContext;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Session;
 
 /**
@@ -23,7 +25,7 @@ import model.Session;
  * @author Admin
  */
 @WebServlet(name="AttendReport", urlPatterns={"/report"})
-public class AttendReport extends HttpServlet {
+public class AttendReport extends BaseRequiredAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,7 +34,7 @@ public class AttendReport extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         String gid = request.getParameter("id");
         String sid = request.getParameter("sid");
@@ -61,9 +63,9 @@ public class AttendReport extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     } 
 
     /** 
@@ -74,9 +76,9 @@ public class AttendReport extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     }
 
     /** 

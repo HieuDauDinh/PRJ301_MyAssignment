@@ -63,6 +63,7 @@
                                     <th>Date</th>
                                     <th>Slot</th>
                                     <th>Room</th>
+                                    <th>Lecturer</th>
                                     <th>Group Name</th>
                                     <th>Attendance status</th>
                                 </tr>
@@ -74,6 +75,7 @@
                                         <td>${ses.date}</td>
                                         <td>${ses.slotid.slotid} (${ses.tid.timeStart}-${ses.tid.timeEnd})</td>
                                         <td>${ses.rid.rname}</td>
+                                        <td>${ses.lid.lname}</td>
                                         <td>${ses.gid.gname}</td>
                                         <td>
                                             <c:if test="${!ses.isTaken}">
@@ -143,6 +145,7 @@
                                     <th>Date</th>
                                     <th>Slot</th>
                                     <th>Room</th>
+                                    <th>Lecturer</th>
                                     <th>Group Name</th>
                                     <th>Attendance status</th>
                                 </tr>
@@ -154,6 +157,7 @@
                                         <td>${ses.date}</td>
                                         <td>${ses.slotid.slotid} (${ses.tid.timeStart}-${ses.tid.timeEnd})</td>
                                         <td>${ses.rid.rname}</td>
+                                        <td>${ses.lid.lid}(${ses.lid.lname})</td>
                                         <td>${ses.gid.gname}</td>
                                         <td>
                                             <c:if test="${!ses.isTaken}">

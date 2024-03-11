@@ -5,6 +5,7 @@
 
 package controller;
 
+import controller.authetication.BaseRequiredAuthenticationController;
 import dal.SessionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Attendance;
 import model.Session;
 import model.Slot;
@@ -24,7 +26,7 @@ import model.Slot;
  * @author Admin
  */
 @WebServlet(name="InforSession", urlPatterns={"/inforSession"})
-public class InforSession extends HttpServlet {
+public class InforSession extends BaseRequiredAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,7 +35,7 @@ public class InforSession extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         int seid = Integer.parseInt(request.getParameter("id"));
         
@@ -60,9 +62,9 @@ public class InforSession extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     } 
 
     /** 
@@ -73,9 +75,9 @@ public class InforSession extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     }
 
     /** 

@@ -11,13 +11,13 @@ package model;
 public class Assessment {
     private String aid;
     private Subject suid;
-    private int weight;
+    private double weight;
     private String name;
 
     public Assessment() {
     }
 
-    public Assessment(String aid, Subject suid, int weight, String name) {
+    public Assessment(String aid, Subject suid, double weight, String name) {
         this.aid = aid;
         this.suid = suid;
         this.weight = weight;
@@ -40,11 +40,11 @@ public class Assessment {
         this.suid = suid;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

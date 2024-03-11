@@ -5,6 +5,7 @@
 
 package controller;
 
+import controller.authetication.BaseRequiredAuthenticationController;
 import dal.SessionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Account;
 import model.Attendance;
 import model.Session;
 import model.Student;
@@ -23,7 +25,7 @@ import model.Student;
  * @author DELL
  */
 @WebServlet(name="AttendanceController", urlPatterns={"/attended"})
-public class AttendanceController extends HttpServlet {
+public class AttendanceController extends BaseRequiredAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -32,7 +34,7 @@ public class AttendanceController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -58,7 +60,7 @@ public class AttendanceController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
        int leid = Integer.parseInt(request.getParameter("id"));
         SessionDBContext db = new SessionDBContext();
@@ -75,7 +77,7 @@ public class AttendanceController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         int leid = Integer.parseInt(request.getParameter("id"));
         SessionDBContext db = new SessionDBContext();

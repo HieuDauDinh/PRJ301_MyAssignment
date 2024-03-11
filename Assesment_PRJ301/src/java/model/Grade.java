@@ -13,8 +13,17 @@ public class Grade {
     private Exam eid;
     private Student stuid;
     private double score;
-
+    private String comment;
+    
     public Grade() {
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public Grade(int gid, Exam eid, Student stuid, double score) {

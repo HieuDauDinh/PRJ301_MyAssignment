@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -67,7 +68,7 @@ public class Function extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       
+       request.getRequestDispatcher("loginc.jsp").forward(request, response);
     } 
 
     /** 
@@ -95,7 +96,15 @@ public class Function extends HttpServlet {
         session.setAttribute("ses", listSession);
         session.setAttribute("sesStu", listSessionStu);
         if(acc!=null){
-            if(acc.getRole() == 1){            
+            if(acc.getRole() == 1){           
+            session.setAttribute("account", acc);
+            
+            Cookie c_user = new Cookie("username", user_raw);
+            Cookie c_pass = new Cookie("password", pass_raw);
+            c_user.setMaxAge(3600*24*7);
+            c_pass.setMaxAge(3600*24*7);
+            response.addCookie(c_pass);
+            response.addCookie(c_user);
                 session.setAttribute("acc", acc);
                 session.setAttribute("lec", lec);
                 response.sendRedirect("functionLectuter.jsp");

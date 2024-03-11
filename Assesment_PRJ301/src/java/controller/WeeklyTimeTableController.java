@@ -8,6 +8,7 @@ package controller;
 import DT.DateProcess;
 import DT.DayDT;
 import DT.SessionDT;
+import controller.authetication.BaseRequiredAuthenticationController;
 import dal.SessionDBContext;
 import dal.SlotDBContext;
 import java.io.IOException;
@@ -27,10 +28,10 @@ import model.Session;
 import model.Slot;
 
 @WebServlet(name="WeeklyTimeTableController", urlPatterns={"/weeklyTable"})
-public class WeeklyTimeTableController extends HttpServlet {
+public class WeeklyTimeTableController extends BaseRequiredAuthenticationController {
    
     
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         SlotDBContext slot = new SlotDBContext();
         HttpSession session = request.getSession();
@@ -80,16 +81,16 @@ public class WeeklyTimeTableController extends HttpServlet {
 
   
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     } 
 
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response, account);
     }
 
     @Override
