@@ -14,9 +14,18 @@ public class Grade {
     private Student stuid;
     private double score;
     private String comment;
-    
-    public Grade() {
+    private String semester;
+
+    public Grade(int gid, Exam eid, Student stuid, double score, String comment, String semester) {
+        this.gid = gid;
+        this.eid = eid;
+        this.stuid = stuid;
+        this.score = score;
+        this.comment = comment;
+        this.semester = semester;
     }
+    
+    
 
     public void setComment(String comment) {
         this.comment = comment;
@@ -26,12 +35,10 @@ public class Grade {
         return comment;
     }
 
-    public Grade(int gid, Exam eid, Student stuid, double score) {
-        this.gid = gid;
-        this.eid = eid;
-        this.stuid = stuid;
-        this.score = score;
+    public Grade() {
     }
+
+    
 
     public int getGid() {
         return gid;
@@ -63,6 +70,14 @@ public class Grade {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
     
     

@@ -403,6 +403,7 @@ public class SessionDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return a;
     }
 
@@ -449,15 +450,16 @@ public class SessionDBContext extends DBContext {
 
     }
 
-    public List<Session> getGidBySidToMarkAttend(String sid) {
+    public List<Session> getGidBySidToMarkAttend(String sid, String semester) {
         List<Session> ses = new ArrayList<>();
         String sql = "SELECT DISTINCT se.gid from Session se INNER JOIN [Group] g ON se.gid = g.gid \n"
                 + "INNER JOIN Erollment e ON g.gid = e.gid  INNER JOIN Student s ON s.stuid = e.stuid\n"
-                + "WHERE s.stuid = ?";
+                + "WHERE s.stuid = ? and g.[semester] = ?";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, sid);
+            st.setString(2, semester);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Session s = new Session();

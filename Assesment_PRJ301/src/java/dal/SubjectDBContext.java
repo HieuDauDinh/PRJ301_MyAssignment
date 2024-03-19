@@ -8,10 +8,15 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import model.Subject;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.Assessment;
 
-
-public class SubjectDBContext extends DBContext{
-
+public class SubjectDBContext extends DBContext {
+    public static void main(String[] args) {
+        SubjectDBContext sub = new SubjectDBContext();
+        System.out.println(sub.getAssesmentBySubid("PRJ301").size());
+    }
     public Subject getSubBySubid(String sid) {
         try {
             String sql = "SELECT [subid]\n"
@@ -34,13 +39,43 @@ public class SubjectDBContext extends DBContext{
                 sub.setCredit(rs.getInt("credit"));
                 sub.setPrerequisite(rs.getString("Prerequisite"));
                 sub.setDepartment(rs.getString("department"));
-                
+
                 return sub;
             }
         } catch (SQLException ex) {
-            
+
         }
         return null;
+
+    }
+
+    public List<Assessment> getAssesmentBySubid(String subid) {
+        List<Assessment> list = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT [aid]\n"
+                    + "      ,[suid]\n"
+                    + "      ,[weight]\n"
+                    + "      ,[name]\n"
+                    + "  FROM [Assignment_PRJ301].[dbo].[Assessment]\n"
+                    + "  Where [suid] = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, subid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Assessment ass = new Assessment();
+                ass.setAid(rs.getString("aid"));
+                ass.setName(rs.getString("name"));
+                ass.setSuid(getSubBySubid(rs.getString("suid")));
+                ass.setWeight(rs.getDouble("weight"));
+                list.add(ass);
+            }
+            
+        } catch (SQLException ex) {
+
+        }
+        return list;
 
     }
 }

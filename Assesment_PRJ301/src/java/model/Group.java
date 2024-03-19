@@ -12,17 +12,19 @@ public class Group {
     private String gid, gname;
     private Subject subid;
     private Lecturer lid;
+    private String semester;
 
-    public Group() {
-    }
-
-    public Group(String gid, String gname, Subject subid, Lecturer lid) {
+    public Group(String gid, String gname, Subject subid, Lecturer lid, String semester) {
         this.gid = gid;
         this.gname = gname;
         this.subid = subid;
         this.lid = lid;
+        this.semester = semester;
     }
 
+    public Group() {
+    }
+    
     public String getGid() {
         return gid;
     }
@@ -53,6 +55,14 @@ public class Group {
 
     public void setLid(Lecturer lid) {
         this.lid = lid;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
     
     

@@ -5,6 +5,7 @@
 package controller;
 
 import controller.authetication.BaseRequiredAuthenticationController;
+import dal.ErollmentDBContext;
 import dal.GroupDBContext;
 import dal.SessionDBContext;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.Attendance;
+import model.Semester;
 import model.Session;
 
 /**
@@ -41,14 +43,21 @@ public class AttendReport extends BaseRequiredAuthenticationController {
             throws ServletException, IOException {
         String gid = request.getParameter("id");
         String sid = request.getParameter("sid");
+        String semid = request.getParameter("semesid");
         GroupDBContext db = new GroupDBContext();
+        ErollmentDBContext erll = new ErollmentDBContext();
         List<Session> list = db.getSessionByGid(gid);
-
+        if(semid == null ||semid.isEmpty()){
+            semid = "SP24";
+        }else{
+             semid  = request.getParameter("semesid");
+         }
         SessionDBContext dbs = new SessionDBContext();
         List<Session> listStu = dbs.getSessionBySidAndGid(sid, gid);
         String lid = request.getParameter("lid");
         List<Session> listS = dbs.distinctGidByLid(lid);
-        List<Session> listGroupStu = dbs.getGidBySidToMarkAttend(sid);
+        List<Semester> semester = erll.getAllSemester();
+        List<Session> listGroupStu = dbs.getGidBySidToMarkAttend(sid, semid);
         ArrayList<Attendance> atten = new ArrayList<>();
         for (Session ses : listStu) {
             Attendance a = dbs.getAttendencesByLessionAndStuid(ses.getSeid(), sid);
@@ -59,6 +68,7 @@ public class AttendReport extends BaseRequiredAuthenticationController {
         request.setAttribute("listAttStu", listStu);
         request.setAttribute("listGroupStu", listGroupStu);
         request.setAttribute("atten", atten);
+        request.setAttribute("semester", semester);
         request.getRequestDispatcher("attendedReport.jsp").forward(request, response);
     }
 

@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.Erollment;
+import model.Semester;
 import model.Student;
 
 /**
@@ -20,7 +21,13 @@ import model.Student;
  * @author Admin
  */
 public class ErollmentDBContext extends DBContext {
-   
+    public static void main(String[] args) {
+        ErollmentDBContext d = new ErollmentDBContext();
+        List<Semester> list = d.getAllSemester();
+        for (Semester semester : list) {
+            System.out.println(semester.getSemID());
+        }
+    }
     public List<Student> getStudentByGid(String gid) {
         List<Student> listStu = new ArrayList();
         try {
@@ -41,5 +48,23 @@ public class ErollmentDBContext extends DBContext {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listStu;
+    }
+
+    public List<Semester> getAllSemester() {
+        List<Semester> listSemester = new ArrayList();
+        try {
+            String sql = "SELECT [SemesterID]\n"
+                    + "      ,[SemesterName]\n"
+                    + "  FROM [Assignment_PRJ301].[dbo].[Semester]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Semester semes = new Semester(rs.getString("SemesterID"), rs.getString("SemesterName"));
+                listSemester.add(semes);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ErollmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listSemester;
     }
 }

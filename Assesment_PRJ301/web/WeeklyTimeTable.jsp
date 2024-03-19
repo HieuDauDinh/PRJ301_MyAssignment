@@ -170,44 +170,59 @@
                                                                                             <c:if test="${ses.date eq i.formatDate() and ses.slotid.slotid eq slot.slotid}">
                                                                                                 <div style="text-align: center" >
                                                                                                     <a href="inforSession?id=${ses.seid}">${ses.subid.subid}</a> at  ${ses.rid.rname}<br>
-                                                                                                        <c:if test="${!ses.isTaken}">
-                                                                                                            <font color="Red">(Not yet)</font> <br>
-                                                                                                                <span class="label label-success">(${ses.tid.timeStart}-${ses.tid.timeEnd})</span>
-                                                                                                            </c:if>
-                                                                                                            <c:if test="${ses.isTaken}">
-                                                                                                                <font color="Red">(Attended)</font> <br>
-                                                                                                                    <span class="label label-success">(${ses.tid.timeStart}-${ses.tid.timeEnd})</span>
+                                                                                                        
+                                                                                                        <c:if test="${ses.isTaken == false || ses.isTaken == null}">
+                                                                                                                    <font color="Red">(Not yet)</font> <br>
+                                                                                                                        <span class="label label-success">(${ses.tid.timeStart}-${ses.tid.timeEnd})</span
+                                                                                                                    </c:if>
+                                                                                                        <c:forEach items="${requestScope.atten}" var="att" varStatus="idex">
+
+                                                                                                            <c:if test="${ses.seid == att.seid.seid}">
+                                                                                                                
+                                                                                                                    <c:if test="${ses.isTaken == true}">
+                                                                                                                        <c:if test="${att.isPresent eq false}">
+                                                                                                                            <font color="Red">(Absent)</font> <br>
+                                                                                                                                <span class="label label-success">(${ses.tid.timeStart}-${ses.tid.timeEnd})</span>
+                                                                                                                            </c:if>
+                                                                                                                            <c:if test="${att.isPresent}">
+                                                                                                                                <font color="Green">(Attended)</font> <br>
+                                                                                                                                    <span class="label label-success">(${ses.tid.timeStart}-${ses.tid.timeEnd})</span>
+                                                                                                                                </c:if>
+
+                                                                                                                            </c:if>
+                                                                                                                        </c:if>
+                                                                                                                    </c:forEach>
+
+                                                                                                                    </div>
                                                                                                                 </c:if>
-                                                                                                                </div>
-                                                                                                            </c:if>
 
 
-                                                                                                        </c:forEach>
-                                                                                                        </td>
-                                                                                                    </c:if>
-                                                                                                </c:forEach>   
-                                                                                                </tr>
-                                                                                            </c:forEach>
-                                                                                            </table>                                                                               
+                                                                                                            </c:forEach>
+                                                                                                            </td>
+                                                                                                        </c:if>
+                                                                                                    </c:forEach>   
+                                                                                                    </tr>
+                                                                                                </c:forEach>
+                                                                                                </table>                                                                               
 
-                                                                                            <p>
-                                                                                                <b>More note / Chú thích thêm</b>:
-                                                                                            </p>
-                                                                                            <div id="ctl00_mainContent_divfoot">
-                                                                                                <ul>
-                                                                                                    <li>(<font color="green">attended</font>): had attended
-                                                                                                        this activity / đã tham gia hoạt động này</li>
-                                                                                                    <li>(<font color="red">absent</font>):  had NOT attended
-                                                                                                        this activity / đã vắng mặt buổi này</li>
-                                                                                                    <li>(-): no data was given / chưa có dữ liệu</li>
-                                                                                                </ul>
-                                                                                            </div>
-                                                                                            <p>
-                                                                                            </p>
-                                                                                            </div>
-                                                                                            </form>
-                                                                                            </div>
-                                                                                            </div>
-                                                                                            </div>
-                                                                                            </body>
-                                                                                            </html>
+                                                                                                <p>
+                                                                                                    <b>More note / Chú thích thêm</b>:
+                                                                                                </p>
+                                                                                                <div id="ctl00_mainContent_divfoot">
+                                                                                                    <ul>
+                                                                                                        <li>(<font color="green">attended</font>): had attended
+                                                                                                            this activity / đã tham gia hoạt động này</li>
+                                                                                                        <li>(<font color="red">absent</font>):  had NOT attended
+                                                                                                            this activity / đã vắng mặt buổi này</li>
+                                                                                                        <li>(-): no data was given / chưa có dữ liệu</li>
+                                                                                                    </ul>
+                                                                                                </div>
+                                                                                                <p>
+                                                                                                </p>
+                                                                                                </div>
+                                                                                                </form>
+                                                                                                </div>
+                                                                                                </div>
+                                                                                                </div>
+                                                                                                </body>
+                                                                                                </html>

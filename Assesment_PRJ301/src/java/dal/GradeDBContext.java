@@ -64,9 +64,11 @@ public class GradeDBContext extends DBContext {
 
                 list.add(gd);
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(GradeDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(list.isEmpty()) return null;
         return list;
     }
 }

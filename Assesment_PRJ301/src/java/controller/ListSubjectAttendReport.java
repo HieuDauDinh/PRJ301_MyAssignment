@@ -6,6 +6,7 @@
 package controller;
 
 import controller.authetication.BaseRequiredAuthenticationController;
+import dal.ErollmentDBContext;
 import dal.GroupDBContext;
 import dal.SessionDBContext;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Semester;
 import model.Session;
 
 /**
@@ -39,16 +41,25 @@ public class ListSubjectAttendReport extends BaseRequiredAuthenticationControlle
     throws ServletException, IOException {
         GroupDBContext db = new GroupDBContext();
         SessionDBContext dbs = new SessionDBContext();
+        ErollmentDBContext erll = new ErollmentDBContext();
+         List<Semester> semester = erll.getAllSemester();
+         String semid = request.getParameter("semesid");
+         if(semid == null ||semid.isEmpty()){
+            semid = "SP24";
+        }else{
+             semid  = request.getParameter("semesid");
+         }
         String id = request.getParameter("id");
         int role = Integer.parseInt(request.getParameter("r"));
         List<Session> listS = dbs.distinctGidByLid(id);
-        List<Session> listGrbySiStuid = dbs.getGidBySidToMarkAttend(id);
+        List<Session> listGrbySiStuid = dbs.getGidBySidToMarkAttend(id, semid);
         HttpSession sesi = request.getSession();
         request.setAttribute("group", listS);
         request.setAttribute("groupStu", listGrbySiStuid);
         sesi.setAttribute("idStu", id);
         sesi.setAttribute("role", role);
         request.setAttribute("listGroupStu", listGrbySiStuid);
+        request.setAttribute("semester", semester);
         request.getRequestDispatcher("attendedReport.jsp").forward(request, response);
         
         

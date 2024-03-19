@@ -38,6 +38,7 @@ public class GroupDBContext extends DBContext {
                     + "      ,[gname]\n"
                     + "      ,[Subid]\n"
                     + "      ,[PIC]\n"
+                    + "      ,[semester]\n"
                     + "  FROM [dbo].[Group] Where gid = ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -49,6 +50,7 @@ public class GroupDBContext extends DBContext {
                 g.setGname(rs.getString("gname"));
                 String subid = rs.getString("Subid");
                 g.setSubid(sub.getSubBySubid(subid));
+                g.setSemester(rs.getString("semester"));
                 String lecid = rs.getString("PIC");
                 g.setLid(lec.getLecByLid(lecid));
                 return g;

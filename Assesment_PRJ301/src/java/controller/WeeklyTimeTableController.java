@@ -24,6 +24,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Attendance;
 import model.Session;
 import model.Slot;
 
@@ -43,9 +44,12 @@ public class WeeklyTimeTableController extends BaseRequiredAuthenticationControl
         session.setAttribute("username", username);
         List<Session> listSession = (List<Session>)session.getAttribute("ses");
         List<Session> listSessionStu = (List<Session>)session.getAttribute("sesStu");
+         ArrayList<Attendance> atten = new ArrayList<>();
         for (Session ss : listSessionStu) {
             boolean isTk = se.getPresentOnSeidAndSid(ss.getSeid(), acc.getUsername()).isIsPresent();
             ss.setIsTaken(isTk);
+            Attendance a = se.getAttendencesByLessionAndStuid(ss.getSeid(), acc.getUsername());
+            atten.add(a);
         }
         //Xác định năm hiện tại
         int year = Year.now().getValue();
@@ -76,6 +80,7 @@ public class WeeklyTimeTableController extends BaseRequiredAuthenticationControl
         request.setAttribute("listSessionStu", listSessionStu);
         request.setAttribute("listSessionByLid", listSessionByLid);
         request.setAttribute("dateNow", getDateNow);
+        request.setAttribute("atten", atten);
         request.getRequestDispatcher("WeeklyTimeTable.jsp").forward(request, response);
     } 
 
